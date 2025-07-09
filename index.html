@@ -3,10 +3,116 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Countdown Timer</title>
+  <title>Bash Countdown</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Gloomy dark base background */
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #0a0a0a;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
+    }
+
+    .background-words {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+    }
+
+    .word {
+      position: absolute;
+      font-size: calc(1.2rem + 1vw);
+      opacity: 0.3;
+      font-weight: bold;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .timer-container {
+      text-align: center;
+      padding: 30px;
+      border-radius: 15px;
+      max-width: 600px;
+      margin: 10vh auto;
+      background-color: rgba(0, 0, 0, 0.6);
+      box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
+    }
+
+    .headline {
+      font-size: 2.5rem;
+      color: #ff5555;
+      margin-bottom: 30px;
+      animation: pulse 1.5s infinite;
+      text-shadow: 2px 2px 8px #ff0000aa;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.8; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    #countdown {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      font-size: 1.5em;
+      flex-wrap: wrap;
+    }
+
+    #countdown div {
+      background: #111;
+      padding: 20px;
+      border-radius: 10px;
+      min-width: 70px;
+      border: 1px solid #333;
+      box-shadow: inset 0 0 10px #ff000022;
+    }
+
+    #countdown span {
+      display: block;
+      font-size: 2.2em;
+      color: #f5f5f5;
+    }
+
+    #countdown small {
+      font-size: 0.8em;
+      color: #ccc;
+    }
+
+    @media (max-width: 600px) {
+      .headline {
+        font-size: 1.8rem;
+      }
+
+      #countdown {
+        font-size: 1.2em;
+        gap: 10px;
+      }
+
+      #countdown div {
+        padding: 15px;
+        min-width: 60px;
+      }
+
+      #countdown span {
+        font-size: 1.6em;
+      }
+    }
+  </style>
 </head>
 <body>
+
+  <!-- Background words -->
+  <div class="background-words" id="backgroundWords"></div>
+
+  <!-- Main content -->
   <div class="timer-container">
     <h1 class="headline">Bash coming in...</h1>
     <div id="countdown">
@@ -16,6 +122,55 @@
       <div><span id="seconds">00</span><small>Seconds</small></div>
     </div>
   </div>
-  <script src="script.js"></script>
+
+  <script>
+    // Countdown timer for 2:00 PM, 10th July 2025
+    const targetDate = new Date("2025-07-10T14:00:00").getTime();
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const gap = targetDate - now;
+
+      if (gap <= 0) {
+        document.getElementById("countdown").innerHTML = "<h2>Time's up!</h2>";
+        return;
+      }
+
+      const second = 1000;
+      const minute = second * 60;
+      const hour = minute * 60;
+      const day = hour * 24;
+
+      const days = Math.floor(gap / day);
+      const hours = Math.floor((gap % day) / hour);
+      const minutes = Math.floor((gap % hour) / minute);
+      const seconds = Math.floor((gap % minute) / second);
+
+      document.getElementById("days").textContent = String(days).padStart(2, "0");
+      document.getElementById("hours").textContent = String(hours).padStart(2, "0");
+      document.getElementById("minutes").textContent = String(minutes).padStart(2, "0");
+      document.getElementById("seconds").textContent = String(seconds).padStart(2, "0");
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    // Create colorful rotating background words
+    const words = ["SSC", "বাঁশ", "Result", "বাবু তোমার রেজাল্ট কি?", "GPA-5.00", "Golden"];
+    const colors = ["#ff4444", "#00ccff", "#ffff00", "#66ff66", "#ff99cc", "#ffa500", "#cc99ff"];
+    const container = document.getElementById("backgroundWords");
+
+    for (let i = 0; i < 100; i++) {
+      const word = document.createElement("div");
+      word.className = "word";
+      word.textContent = words[Math.floor(Math.random() * words.length)];
+      word.style.left = Math.random() * 100 + "vw";
+      word.style.top = Math.random() * 100 + "vh";
+      word.style.transform = `rotate(${Math.floor(Math.random() * 360)}deg)`;
+      word.style.color = colors[Math.floor(Math.random() * colors.length)];
+      word.style.opacity = (Math.random() * 0.6 + 0.2).toFixed(2);
+      container.appendChild(word);
+    }
+  </script>
 </body>
 </html>
