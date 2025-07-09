@@ -1,3 +1,10 @@
+// Attempt to play audio after user interaction (required by some browsers)
+window.addEventListener('click', function enableAudio() {
+  const audio = document.getElementById("bg-audio");
+  audio.play().catch(() => {});
+  window.removeEventListener('click', enableAudio);
+});
+
 // Countdown timer for 2:00 PM, 10th July 2025
 const targetDate = new Date("2025-07-10T14:00:00").getTime();
 
