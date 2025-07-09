@@ -37,7 +37,19 @@ setInterval(updateCountdown, 1000);
 updateCountdown();
 
 // Create colorful rotating background words in random positions
-const words = ["SSC", "বাঁশ", "Result", "বাবু তোমার রেজাল্ট কি?", "GPA-5.00", "Golden"];
+const words = [
+  "SSC",
+  "বাঁশ",
+  "Result",
+  "বাবু তোমার রেজাল্ট কি?",
+  "GPA-5.00",
+  "Golden",
+  "মিষ্টি খাওয়াবে না?",
+  "এত পড়াশোনা করে কি হলো",
+  "A+"
+  "College paba na toh"
+];
+
 const colors = ["#ff4444", "#00ccff", "#ffff00", "#66ff66", "#ff99cc", "#ffa500", "#cc99ff"];
 const container = document.getElementById("backgroundWords");
 
