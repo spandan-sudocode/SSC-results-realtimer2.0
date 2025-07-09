@@ -1,4 +1,4 @@
-// Set target date and time: 10th July 2025 at 2:00 PM
+// Countdown timer for 2:00 PM, 10th July 2025
 const targetDate = new Date("2025-07-10T14:00:00").getTime();
 
 function updateCountdown() {
@@ -20,11 +20,28 @@ function updateCountdown() {
   const minutes = Math.floor((gap % hour) / minute);
   const seconds = Math.floor((gap % minute) / second);
 
-  document.getElementById("days").textContent = days.toString().padStart(2, "0");
-  document.getElementById("hours").textContent = hours.toString().padStart(2, "0");
-  document.getElementById("minutes").textContent = minutes.toString().padStart(2, "0");
-  document.getElementById("seconds").textContent = seconds.toString().padStart(2, "0");
+  document.getElementById("days").textContent = String(days).padStart(2, "0");
+  document.getElementById("hours").textContent = String(hours).padStart(2, "0");
+  document.getElementById("minutes").textContent = String(minutes).padStart(2, "0");
+  document.getElementById("seconds").textContent = String(seconds).padStart(2, "0");
 }
 
 setInterval(updateCountdown, 1000);
-updateCountdown(); // Initial call
+updateCountdown();
+
+// Create colorful rotating background words
+const words = ["SSC", "বাঁশ", "Result", "বাবু তোমার রেজাল্ট কি?", "GPA-5.00", "Golden"];
+const colors = ["#ff4444", "#00ccff", "#ffff00", "#66ff66", "#ff99cc", "#ffa500", "#cc99ff"];
+const container = document.getElementById("backgroundWords");
+
+for (let i = 0; i < 100; i++) {
+  const word = document.createElement("div");
+  word.className = "word";
+  word.textContent = words[Math.floor(Math.random() * words.length)];
+  word.style.left = Math.random() * 100 + "vw";
+  word.style.top = Math.random() * 100 + "vh";
+  word.style.transform = `rotate(${Math.floor(Math.random() * 360)}deg)`;
+  word.style.color = colors[Math.floor(Math.random() * colors.length)];
+  word.style.opacity = (Math.random() * 0.6 + 0.2).toFixed(2);
+  container.appendChild(word);
+}
