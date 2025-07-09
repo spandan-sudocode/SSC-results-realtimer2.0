@@ -36,19 +36,35 @@ function updateCountdown() {
 setInterval(updateCountdown, 1000);
 updateCountdown();
 
-// Create colorful rotating background words
+// Create colorful rotating background words in random positions
 const words = ["SSC", "বাঁশ", "Result", "বাবু তোমার রেজাল্ট কি?", "GPA-5.00", "Golden"];
 const colors = ["#ff4444", "#00ccff", "#ffff00", "#66ff66", "#ff99cc", "#ffa500", "#cc99ff"];
 const container = document.getElementById("backgroundWords");
 
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
 for (let i = 0; i < 100; i++) {
   const word = document.createElement("div");
   word.className = "word";
-  word.textContent = words[Math.floor(Math.random() * words.length)];
-  word.style.left = Math.random() * 100 + "vw";
-  word.style.top = Math.random() * 100 + "vh";
-  word.style.transform = `rotate(${Math.floor(Math.random() * 360)}deg)`;
-  word.style.color = colors[Math.floor(Math.random() * colors.length)];
+  word.textContent = words[getRandomInt(0, words.length - 1)];
+
+  // Random position
+  word.style.left = `${Math.random() * 100}vw`;
+  word.style.top = `${Math.random() * 100}vh`;
+
+  // Random rotation and color
+  word.style.transform = `rotate(${getRandomInt(-180, 180)}deg)`;
+  word.style.color = colors[getRandomInt(0, colors.length - 1)];
   word.style.opacity = (Math.random() * 0.6 + 0.2).toFixed(2);
+
   container.appendChild(word);
 }
+
+// Try autoplay for the audio
+window.addEventListener('click', function enableAudio() {
+  const audio = document.getElementById("bg-audio");
+  audio.play().catch(() => {});
+  window.removeEventListener('click', enableAudio);
+});
