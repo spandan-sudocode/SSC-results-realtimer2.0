@@ -5,7 +5,7 @@ window.addEventListener('click', function enableAudio() {
   window.removeEventListener('click', enableAudio);
 });
 // Countdown timer for 2:00 PM, 10th July 2025
-const targetDate = new Date("2025-07-10T14:00:00").getTime();
+const targetDate = new Date("2025-08-08T14:00:00").getTime();
 
 function updateCountdown() {
   const now = new Date().getTime();
